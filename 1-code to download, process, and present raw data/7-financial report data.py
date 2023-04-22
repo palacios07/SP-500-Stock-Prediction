@@ -20,7 +20,7 @@ from datetime import datetime,timedelta
 import numpy as np
 
 
-_stock_dat = stock_data_indices = json.loads(open('data\\5-cleaned_stock_data.json').read())
+_stock_dat = stock_data_indices = json.loads(open('1-code to download, process, and present raw data/data/5-cleaned_stock_data.json').read())
 
 
 ###############################################################################
@@ -31,7 +31,7 @@ tickers_list = list(_stock_dat.keys())
 '''first load all variable names from csv files'''
 Lst = []
 for ticker in tqdm(tickers_list):
-    _valuation_measures = pd.read_csv( 'data\\7-merged_finance_data\\' + str(ticker) + "\\" + str(ticker) +'_monthly_valuation_measures.csv',
+    _valuation_measures = pd.read_csv( '1-code to download, process, and present raw data/data/7-merged_finance_data/' + str(ticker) + "/" + str(ticker) +'_monthly_valuation_measures.csv',
                                  index_col=0)
     if 'ttm' in _valuation_measures.columns:
         del _valuation_measures['ttm']
@@ -78,7 +78,7 @@ def extract_daily_statement(_valuation_measures,available_dates,val_names):
 
 dat = {}
 for ticker in tqdm(tickers_list):
-    _valuation_measures = pd.read_csv( 'data\\7-merged_finance_data\\' + str(ticker) + "\\" + str(ticker) +'_monthly_valuation_measures.csv',
+    _valuation_measures = pd.read_csv( '1-code to download, process, and present raw data/data/7-merged_finance_data/' + str(ticker) + "/" + str(ticker) +'_monthly_valuation_measures.csv',
                                  index_col=0)
     if 'ttm' in _valuation_measures.columns:
         del _valuation_measures['ttm']
@@ -125,7 +125,7 @@ for ticker in tqdm(tickers_list):
     dat[ticker] = temp.to_dict()
 
 'save data'
-with open('data\\fundamental_indices_data.json', 'w') as fp:
+with open('1-code to download, process, and present raw data/data/fundamental_indices_data.json', 'w') as fp:
     json.dump(dat, fp)    
 
     

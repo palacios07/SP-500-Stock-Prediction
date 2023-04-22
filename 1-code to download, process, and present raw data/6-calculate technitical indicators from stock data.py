@@ -12,7 +12,7 @@ sys.path.append(os.getcwd())
 
 ###############################################################################
 import json
-import stockstats
+import stockstats #pip install stockstats
 
 import pandas as pd
 from tqdm import tqdm
@@ -22,7 +22,7 @@ from tqdm import tqdm
 '''Stock.Indicators'''
 '''https://github.com/DaveSkender/Stock.Indicators'''
 
-stock_data_indices = json.loads(open('data\\5-cleaned_stock_data.json').read())
+stock_data_indices = json.loads(open('1-code to download, process, and present raw data/data/5-cleaned_stock_data.json').read())
 
 stock_indicators = {}
 for ticker in tqdm(stock_data_indices.keys()):  
@@ -38,5 +38,5 @@ for ticker in tqdm(stock_data_indices.keys()):
     
     stock_indicators[ticker] = temp[['adx','trix','adxr','cci','macd','macdh','rsi_14','kdjk','wr_14','atr_percent','atr','cmf']].dropna().to_dict()
     
-with open('data\\6-technical_indicators.json', 'w') as fp:
+with open('1-code to download, process, and present raw data/data/6-technical_indicators.json', 'w') as fp:
     json.dump(stock_indicators, fp)

@@ -18,7 +18,7 @@ from tqdm import tqdm
 import time
 import json
 
-ticker_name_list = json.loads(open('data\\ticker_name_list.json').read())
+ticker_name_list = json.loads(open('1-code to download, process, and present raw data/data/1-ticker_name_list.json').read())
 tickers = list(ticker_name_list.keys())
 
 stock_data_YF = {}
@@ -28,8 +28,8 @@ for ticker in tqdm( tickers ):
     stock_data_YF[ticker] = _closing_dat.T.to_dict()
     time.sleep(10)
     
-with open('data\\stock_data_YF.json', 'w') as fp:
-    json.dump(stock_data_YF, fp)
+with open('1-code to download, process, and present raw data/data/stock_data_YF.json', 'w') as fp:
+    json.dump(str(stock_data_YF), fp)
 
 
 

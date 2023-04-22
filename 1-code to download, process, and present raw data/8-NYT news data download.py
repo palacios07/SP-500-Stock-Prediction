@@ -19,14 +19,17 @@ import os
 
 '''register for a free api key from NYT website: https://developer.nytimes.com/apis'''
 
-Path('data\\8-NYT_data\\').mkdir(parents=True, exist_ok=True)
+#KEY: HJpDFtVPkGEUQJFgsFG5UzkTxZzUsgzU
+#SECRET: RhIviLhqw0FfZxOZ
 
-for year in range(2000,2020):    
+Path('1-code to download, process, and present raw data/data/8-NYT_data/').mkdir(parents=True, exist_ok=True)
+
+for year in range(2000,2023):    
     for month in range(1,13):
-        if not os.path.isfile('data\\8-NYT_data\\' +str(year) + "_" + str(month) + '.json'):   
-            with urllib.request.urlopen("https://api.nytimes.com/svc/archive/v1/" + str(year) + "/" + str(month) + ".json?api-key=your api key") as url:
+        if not os.path.isfile('1-code to download, process, and present raw data/data/8-NYT_data/' +str(year) + "_" + str(month) + '.json'):   
+            with urllib.request.urlopen("https://api.nytimes.com/svc/archive/v1/" + str(year) + "/" + str(month) + ".json?api-key=HJpDFtVPkGEUQJFgsFG5UzkTxZzUsgzU") as url:
                 data = json.loads(url.read().decode())
-            with open('data\\8-NYT_data\\' +str(year) + "_" + str(month) + '.json', 'w') as f:
+            with open('1-code to download, process, and present raw data/data/8-NYT_data/' +str(year) + "_" + str(month) + '.json', 'w') as f:
                 json.dump(data, f)
             time.sleep(120)
         time.sleep(6)

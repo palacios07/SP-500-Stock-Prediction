@@ -15,9 +15,11 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 ##################################
-
-_stock_AV = json.loads(open('data\\_cleaned_stock_data\\stock_data_AV.json').read())
-_stock_YF = json.loads(open('data\\_cleaned_stock_data\\stock_data_YF.json').read())
+#1-code to download, process, and present raw data/data/
+#_stock_AV = json.loads(open('data\\_cleaned_stock_data\\stock_data_AV.json').read())
+_stock_AV = json.loads(open('1-code to download, process, and present raw data/data/stock_data_AV.json').read())
+#_stock_YF = json.loads(open('data\\_cleaned_stock_data\\stock_data_YF.json').read())
+_stock_YF = json.loads(open('1-code to download, process, and present raw data/data/stock_data_YF.json').read())
 
 ###############################################################################
 '''problematic data'''
@@ -37,13 +39,13 @@ del _stock_YF['NE']
 AV_length = []
 for ticker in tqdm( _stock_AV.keys() ):
     AV_date = [date for date in list( _stock_AV[ticker].keys() )  if 
-               datetime.strptime(date,'%Y-%m-%d') >=  datetime(1999, 11, 1, 0, 0) and  datetime.strptime(date,'%Y-%m-%d') <=  datetime(2019, 12, 31, 0, 0)]
+               datetime.strptime(date,'%Y-%m-%d') >=  datetime(1999, 11, 1, 0, 0) and  datetime.strptime(date,'%Y-%m-%d') <=  datetime(2023, 3, 31, 0, 0)]
     AV_length.append(len(AV_date))
     
 YF_length = []
 for ticker in tqdm( _stock_AV.keys() ):
     YF_date = [date for date in list( _stock_YF[ticker].keys() )  if 
-               datetime.strptime(date,'%Y-%m-%d') >=  datetime(1999, 11, 1, 0, 0) and  datetime.strptime(date,'%Y-%m-%d') <=  datetime(2019, 12, 31, 0, 0)]
+               datetime.strptime(date,'%Y-%m-%d') >=  datetime(1999, 11, 1, 0, 0) and  datetime.strptime(date,'%Y-%m-%d') <=  datetime(2023, 3, 31, 0, 0)]
     YF_length.append(len(YF_date))
 
 temp = np.absolute(np.asarray(AV_length)-np.asarray(YF_length))
@@ -64,12 +66,12 @@ dat = {}
 for ticker in tqdm(_stock_AV.keys()):
     AV = pd.DataFrame.from_dict(_stock_AV[ticker]).T
     AV.index = pd.to_datetime(AV.index)
-    AV = AV.loc[ AV.index <= datetime(2020, 9, 30, 0, 0)]
+    AV = AV.loc[ AV.index <= datetime(2023, 3, 31, 0, 0)]
     AV = AV.loc[ AV.index >= datetime(1999, 11, 1, 0, 0)]
     
     YF = pd.DataFrame.from_dict(_stock_YF[ticker]).T
     YF.index = pd.to_datetime(YF.index)
-    YF = YF.loc[ YF.index <= datetime(2020, 9, 30, 0, 0)]
+    YF = YF.loc[ YF.index <= datetime(2023, 3, 31, 0, 0)]
     YF = YF.loc[ YF.index >= datetime(1999, 11, 1, 0, 0)]
     
     merge = pd.merge(AV,YF,left_index=True,right_index=True,how = "inner")

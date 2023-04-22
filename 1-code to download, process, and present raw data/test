@@ -1,0 +1,53 @@
+#import sys, os
+#from pathlib import Path
+#project_dir = Path.cwd()
+
+#os.chdir(project_dir)
+
+#sys.path.append(os.getcwd())
+
+#print('### TESING:' + str(os.chdir(project_dir)))
+#open(str(os.getcwdb()) + '1-code to download, process, and present raw data/data/1-ticker_name_list.json', 'r')
+
+
+
+
+import alpha_vantage
+from alpha_vantage.timeseries import TimeSeries
+
+import json
+import time
+from tqdm import tqdm
+
+import sys, os
+from pathlib import Path
+project_dir = Path.cwd()
+os.chdir(project_dir)
+sys.path.append(os.getcwd())
+
+def get_stock_data(symbols):
+
+    key='AKWAHB33RHC5FNML'
+    # Create an instance of the TimeSeries class with your API key
+    ts = TimeSeries(key=key)
+    
+    # Initialize an empty dictionary to store the stock data
+    stock_data = {}
+    
+    for symbol in symbols:
+        try:
+            # Use the get_daily_adjusted method to retrieve stock data
+            data, meta_data = ts.get_daily_adjusted(symbol=symbol, outputsize='full')
+            stock_data[symbol] = data
+            time.sleep(15)
+        except:
+            print(f"Error: {symbol} not found in Alpha Vantage API")
+            stock_data[symbol] = None
+
+
+    'save data'
+    with open('1-code to download, process, and present raw data/data/stock_data_SPX.json', 'w') as fp:
+        json.dump(stock_data, fp)
+
+
+get_stock_data('SPX')

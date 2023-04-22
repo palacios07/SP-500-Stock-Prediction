@@ -16,8 +16,11 @@ from datetime import datetime,timedelta
 import pandas as pd
 ##################################
 
-_stock_AV = json.loads(open('data\\stock_data_AV.json').read())
-_stock_YF = json.loads(open('data\\stock_data_YF.json').read())
+#_stock_AV = json.loads(open('data\\stock_data_AV.json').read())
+#_stock_YF = json.loads(open('data\\stock_data_YF.json').read())
+
+_stock_AV = json.loads(open('1-code to download, process, and present raw data/data/stock_data_AV.json').read())
+_stock_YF = json.loads(open('1-code to download, process, and present raw data/data/stock_data_YF.json').read())
 
 ###############################################################################
 '''problematic data'''
@@ -35,11 +38,11 @@ del _stock_YF['NE']
 dat = {} 
 for ticker in tqdm(_stock_AV.keys()):
     AV = pd.DataFrame.from_dict(_stock_AV[ticker]).T
-    AV = AV.loc[ pd.to_datetime(AV.index) <= datetime(2020, 9, 30, 0, 0)]
+    AV = AV.loc[ pd.to_datetime(AV.index) <= datetime(2023, 3, 31, 0, 0)]
     AV = AV.loc[ pd.to_datetime(AV.index) >= datetime(1999, 11, 1, 0, 0)]
     
     YF = pd.DataFrame.from_dict(_stock_YF[ticker]).T
-    YF = YF.loc[ pd.to_datetime(YF.index) <= datetime(2020, 9, 30, 0, 0)]
+    YF = YF.loc[ pd.to_datetime(YF.index) <= datetime(2023, 3, 31, 0, 0)]
     YF = YF.loc[ pd.to_datetime(YF.index) >= datetime(1999, 11, 1, 0, 0)]
     
     merge = pd.merge(YF,AV,left_index=True,right_index=True,how = "left")
@@ -63,7 +66,7 @@ for ticker in tqdm(_stock_AV.keys()):
     
 ###############################################################################
 
-with open('data\\5-cleaned_stock_data.json', 'w') as fp:
+with open('1-code to download, process, and present raw data/data/5-cleaned_stock_data.json', 'w') as fp:
     json.dump(dat, fp)
 
 ###############################################################################
@@ -75,7 +78,7 @@ for ticker in tqdm(dat.keys()):
     if pd.to_datetime(merge.index[0]) <= datetime(2015,9,30,0,0):
         ticker_list.append(ticker)
 
-ticker_name_list = json.loads(open('data\\1-ticker_name_list.json').read())
+ticker_name_list = json.loads(open('1-code to download, process, and present raw data/data/1-ticker_name_list.json').read())
 
 filtered_ticker_list = {}
 for ticker in ticker_list:

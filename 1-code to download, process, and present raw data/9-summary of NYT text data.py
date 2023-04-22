@@ -37,10 +37,10 @@ def get_type_of_material(data):
 
 output = {}
 
-for year in tqdm(range(2000,2020)):
+for year in tqdm(range(2000,2023)):
     cnt = Counter()
     for month in range(1,13):
-        data = json.loads(open('data\\8-NYT_data\\' +str(year) + "_" + str(month) + '.json').read())
+        data = json.loads(open('1-code to download, process, and present raw data/data/8-NYT_data/' +str(year) + "_" + str(month) + '.json').read())
         data = get_type_of_material(data)
         for item in data:
             cnt[item] += 1    
@@ -154,7 +154,7 @@ for name in labels[1:]:
     stack_sum = np.sum ( [stack_sum , list(temp_plot[name].values())] , axis = 0)
 ax[1].tick_params(axis='x', labelrotation=45)
 
-ax[0].set_title('Summary for NYT article types from 2000-01-01 to 2019-12-31',color = "darkslategrey",ha='center', y = 1.05)
-ax[1].set_title('Yearly NYT article count from 2000-01-01 to 2019-12-31',color = "darkslategrey",ha='center', y = 1.05)
+ax[0].set_title('Summary for NYT article types from 2000-01-01 to 2023-03-31',color = "darkslategrey",ha='center', y = 1.05)
+ax[1].set_title('Yearly NYT article count from 2000-01-01 to 2023-03-31',color = "darkslategrey",ha='center', y = 1.05)
 plt.savefig('NYT_summary.png', dpi=300)
 plt.show()
